@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+#
+# Copyright (C) 2017-2018 Albert I (krasCGQ)
+# Copyright (C) 2017-2018 The crDroid Project
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# Device: Xiaomi Redmi Note 5 (whyred)
+device="device/xiaomi/whyred";
+kernel="kernel/xiaomi/whyred";
+vendor="vendor/xiaomi/";
+
+# HALs
+#audio="hardware/qcom/audio-caf/msm8996";
+#display="hardware/qcom/display-caf/msm8996";
+#media="hardware/qcom/media-caf/msm8996";
+
+# Toolchain
+#toolchain="prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-7.x";
+
+# Default branches
+#default="aligot-release";
+#hals="oreo-mr1-caf-8996";
+
+# Clone
+[[ ! -d ${device} ]] && git clone git://github.com/mdeejay/device_xiaomi_whyred -b lineage-15.1 ${device};
+[[ ! -d ${kernel} ]] && git clone git://github.com/CypherOS/kernel_xiaomi_whyred -b parfait-release ${kernel};
+[[ ! -d ${vendor} ]] && git clone git://github.com/mdeejay/vendor_xiaomi -b aligot-release ${vendor};
+#[[ ! -d ${toolchain} ]] && git clone git://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-7.x ${toolchain};
+
+# Update
+if [[ -d ${device} ]]; then
+    cd ${device};
+    git pull origin;
+    git fetch origin lineage-15.1;
+#    git reset --hard FETCH_HEAD;
+#    git clean -dfx;
+    cd ../../..;
+fi;
+if [[ -d ${kernel} ]]; then
+    cd ${kernel};
+    git pull origin parfait-release;
+    cd ../../..;
+fi;
+if [[ -d ${vendor} ]]; then
+    cd ${vendor};
+    git pull origin;
+    git fetch origin aligot-release;
+#    git reset --hard origin/o;
+#    git clean -dfx;
+    cd ../../..;
+fi;
+#if [[ -d ${toolchain} ]]; then
+#    cd ${toolchain};
+#    git fetch origin opt-gnu-7.x;
+#    git reset --hard FETCH_HEAD;
+#    git clean -dfx;
+#    cd ../../../../..;
+#fi;
+#if [[ -d ${audio} ]]; then
+#    cd ${audio};
+#    git fetch git://github.com/KudProject/hardware_qcom_audio ${hals};
+#    git reset --hard FETCH_HEAD;
+#    cd ../../../..;
+#fi;
+#if [[ -d ${display} ]]; then
+#    cd ${display};
+#    git fetch git://github.com/KudProject/hardware_qcom_display ${hals};
+#    git reset --hard FETCH_HEAD;
+#    cd ../../../..;
+#fi;
+#if [[ -d ${media} ]]; then
+#    cd ${media};
+#    git fetch git://github.com/KudProject/hardware_qcom_media ${hals};
+#    git reset --hard FETCH_HEAD;
+#    cd ../../../..;
+#fi;
+
+# Device Tree Patch
+#if [[ -d ${device} ]]; then
+#    cd ${device};
+#    printf "\nTARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-opt-linux-android-" >> BoardConfig.mk;
+#    printf "\nKERNEL_TOOLCHAIN := /home/alex/crDroid/${toolchain}/bin" >> BoardConfig.mk;
+#    cd ../../..;
+#fi;
