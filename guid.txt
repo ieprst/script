@@ -1,0 +1,9 @@
+repo sync -j8 --force-sync
+. build/envsetup.sh && lunch omni_tulip-eng && make -j8 recoveryimage
+
+
+. build/envsetup.sh && export ALLOW_MISSING_DEPENDENCIES=true 
+lunch omni_tulip-eng && mka -j8 recoveryimage
+
+
+﻿
